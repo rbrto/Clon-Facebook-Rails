@@ -1,0 +1,13 @@
+<% provide(:title, "All users") %>
+
+<h1>All Users</h1>
+
+<%= will_paginate %>
+
+<ul class="users">
+   <!-- renderiza el partial users/_user.html-->
+   <!-- (implicit partial  se ocupa para renderizar un modelo ya sea un registro individual o muchos registros asociados a ese modelo en varios lados )-->
+  <%= render @users %>
+</ul>
+
+<%= will_paginate %>

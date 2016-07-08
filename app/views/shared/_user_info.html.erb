@@ -1,0 +1,32 @@
+
+<section class="user_info">
+  <h1>
+    <%= avatar(user, style: :avatar) %>
+    <%= user.name %>
+  </h1>
+  <%= link_to pluralize(user.friends.count, "friend"), friends_user_path(user) %>
+</section>
+
+<!--  si el usuario logueado es el actual (la variable user es enviada en la vista posts/index)-->
+<% if user == current_user %>
+  <section class="post_form">
+    <%= render 'shared/post_form' %>
+  </section>
+<% else %>
+  <section class="friend_form">
+    <%= render 'shared/friend_form', user: user %>
+  </section>
+<% end %>
+
+<section class="friend_map">
+
+  <% if user.friends.any? %>
+    <div class="user_avatars">
+      <h4><%= user.first_name %>'s Friends</h4>
+      <% user.friends.each do |friend| %>
+            <%= link_to avatar(friend, size: 40, style: :small), friend %>
+      <% end %>
+    </div>
+  <% end %>
+
+</section>

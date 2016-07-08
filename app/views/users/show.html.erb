@@ -1,0 +1,18 @@
+<% provide(:title, @user.name) %>
+
+<div class="row">
+  <aside class="col-md-4">
+    <%= render 'shared/user_info', user: @user %>
+  </aside>
+  <div class="col-md-8">
+    <% if @user.posts.any? %>
+      <h3><%= @user.first_name %>'s Posts (<%= @user.posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+      <%= will_paginate @posts %>
+    <% else %>
+      <h3><%= @user.first_name %> hasn't posted yet</h3>
+    <% end %>
+  </div>
+</div>

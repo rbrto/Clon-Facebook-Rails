@@ -1,0 +1,6 @@
+<li>
+  <%= avatar(user) %>
+  <%= link_to user.name, user %>
+  <!-- pasa la variable de instancia user a el partial para ser usado en el formulario-->
+  <%= render 'shared/friend_form', user: user %>
+</li>

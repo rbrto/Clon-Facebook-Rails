@@ -1,0 +1,37 @@
+<% provide(:title, "#{@user.first_name}'s Friends") %>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= avatar(@user) %>
+        <%= "#{@user.first_name}'s Friends" %>
+      </h1>
+    </section>
+
+    <!-- hay alguna solicitud de amistad ?-->
+    <% if @user.friend_requests.any? %>
+      <section class="friend_requests">
+        <h1>Pending Requests (<%= @user.friend_requests.count %>)</h1>
+        <ul class="pending">
+          <% @user.friend_requests.each do |req| %>
+            <%= render 'user', user: req.friender %>
+          <% end %>
+        </ul>
+      </section>
+    <% end %>
+  </aside>
+  <div class="col-md-8">
+    <% if @user.friends.any? %>
+    <!-- cuenta la cantidad de amigos -->
+      <h3>Friends (<%= @user.friends.count %>)</h3>
+      <ul class="friends">
+      <!-- renderiza el partial users/_user.html-->
+        <%= render @friends %>
+      </ul>
+      <%= will_paginate @friends %>
+    <% else %>
+      <h3><%= @user.first_name %> doesn't have any friends.</h3>
+    <% end %>
+  </div>
+</div>

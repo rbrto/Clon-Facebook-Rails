@@ -1,0 +1,32 @@
+<!-- Acts as the user's feed -->
+
+<div class="row">
+  
+  <aside class="col-md-4">
+  <!-- Passando una variable (usuario logueado) a el partial  -->
+    <%= render 'shared/user_info', user: current_user %>
+
+  </aside>
+
+  <div class="col-md-8">
+
+    <% if current_user.timeline.any? %>
+
+      <h3>Your Timeline</h3>
+
+      <ol class="posts">
+
+      <!-- renderiza el partial posts/_post con cada uno de los post de la coleccion -->
+
+         <!-- (implicit partial  se ocupa para renderizar un modelo ya sea un registro individual o muchos registros asociados a ese modelo en varios lados )-->
+        <%= render @posts %>
+
+      </ol>
+
+      <%= will_paginate @posts %>
+
+    <% end %>
+
+  </div>
+
+</div>

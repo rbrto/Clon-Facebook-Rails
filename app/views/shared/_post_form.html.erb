@@ -1,0 +1,11 @@
+<%= form_for @post do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.text_area :text, placeholder: "What are you thinking about?" %>
+  </div>
+  <div class="field">
+    <%= f.label :image, "Attach an image" %>
+    <%= f.file_field :image %>
+  </div>
+  <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
