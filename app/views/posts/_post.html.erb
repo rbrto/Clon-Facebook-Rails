@@ -1,28 +1,39 @@
 <li id="post-<%= post.id %>">
+
   <%= link_to avatar(post.user, size: 50, style: :post), post.user %>
+
   <span class="user"><%= link_to post.user.name, post.user %></span>
+
   <span class="timestamp"><%= link_to post.created_at.strftime("%b %e at %l:%M %p"), post_path(post) %></span>
+
   <span class="text">
     <%= post.text %>
     <%= image_tag post.image.url(:medium) if post.image? %>
   </span>
+
   <span class="options">
+
     <% if like = current_user.likes.find_by(post_id: post.id) %>
       <%= link_to "Unlike (#{post.likes.count})", post_like_path(post_id: post.id, id: like.id),
                                                   method: :delete %>
     <% else %>
+     <!-- crea un like para el post LikesController#create-->
       <%= link_to "Like (#{post.likes.count})", post_likes_path(post_id: post.id),
                                                 method: :post %>
     <% end %>
+
+   <!-- si el post es del usuario logueado entra-->
     <% if post.user == current_user %>
-       | <%= link_to "Edit", "#", class: "edit_link" %> | 
+       | <%= link_to "Edit", "#", class: "edit_link" %> |
       <%= link_to "Delete", post_path(post), data: { confirm: "Are you sure you'd like to delete this post?" },
                             method: :delete %>
       <div class="edit_form">
         <%= render 'shared/edit_form', post: post %>
       </div>
     <% end %>
+
   </span>
+
   <div class="post_comments">
     <!-- envia la variable de instancia post a el partial posts/_comments -->
     <%= render 'posts/comments', post: post %>

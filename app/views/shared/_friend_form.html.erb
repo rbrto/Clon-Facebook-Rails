@@ -1,36 +1,39 @@
 <% unless current_user == user %>
 
-  <!-- si son amigos entra el usuario logueado a ver el perfil de su amigo --> 
+  <!-- si son amigos  el usuario logueado con el user visitado -->
   <% if current_user.friends?(user) %>
 
-    <br />
-    <%= form_for current_user.get_friendship(user), method: :delete do |f| %>
-      <%= f.submit "Unfriend this user", class: "btn btn-sm btn-danger",
-                                         data: { confirm: "Are you sure you want to unfriend this user?" } %>
-    <% end %>
-  <!--  si hay una solicitud pendiente (acepta o ignora)-->  
+      <br />
+      <%= form_for current_user.get_friendship(user), method: :delete do |f| %>
+        <%= f.submit "Unfriend this user", class: "btn btn-sm btn-danger",
+                                           data: { confirm: "Are you sure you want to unfriend this user?" } %>
+      <% end %>
+  <!--  si hay una solicitud de amistad pendiente (distinto de vacio) (acepta o ignora)  -->
   <% elsif !current_user.pending_friend(user).nil? %>
 
-    <br />
-    <%= form_for current_user.pending_friend(user) do |f| %>
-      <%= f.submit "Accept friend request", class: "btn btn-sm btn-success" %>
       <br />
-      <%= f.submit "Ignore friend request", class: "btn btn-sm btn-default", name: 'ignore' %>
-    <% end %>
-
-  <% else %>
-
-    <br />
-    <% if user.pending_friend(current_user).nil? %>
-
-      <%= form_for current_user.active_friendships.build do |f| %>
-        <div><%= hidden_field_tag :user, user.id %></div>
-        <%= f.submit "Add friend", class: "btn btn-sm btn-primary" %>
+      <%= form_for current_user.pending_friend(user) do |f| %>
+        <%= f.submit "Accept friend request", class: "btn btn-sm btn-success" %>
+        <br />
+        <%= f.submit "Ignore friend request", class: "btn btn-sm btn-default", name: 'ignore' %>
       <% end %>
 
-    <% else %>
-      <span class="label label-default" id="pending">Request pending</span>
-    <% end %>
+  <% else %>
+   <!--  si no hay solicitudes de amistad entre un futuro amigo y el usuario logueado  entra para añadir como un nuevo amigo-->
+       <br />
+       <% if user.pending_friend(current_user).nil? %>
+
+        <%= form_for current_user.active_friendships.build do |f| %>
+          <div><%= hidden_field_tag :user, user.id %></div>
+          <%= f.submit "Add friend", class: "btn btn-sm btn-primary" %>
+        <% end %>
+
+      <% else %>
+
+        <span class="label label-default" id="pending">Request pending</span>
+
+      <% end %>
 
   <% end %>
+
 <% end %>

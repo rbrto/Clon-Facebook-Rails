@@ -1,4 +1,4 @@
-
+<!-- vista user info con un form para crear un post si el usuario actual es el logueado o ver la info de un friend-->
 <section class="user_info">
   <h1>
     <%= avatar(user, style: :avatar) %>
@@ -7,12 +7,13 @@
   <%= link_to pluralize(user.friends.count, "friend"), friends_user_path(user) %>
 </section>
 
-<!--  si el usuario logueado es el actual (la variable user es enviada en la vista posts/index)-->
+<!--  si el usuario logueado esta en su perfil  user es pasado en index.html como current_user-->
 <% if user == current_user %>
   <section class="post_form">
     <%= render 'shared/post_form' %>
   </section>
 <% else %>
+<!-- si el usuario logueado visita otro perfil  user es pasado por UsersController#show hace referencia al usuario amigo -->
   <section class="friend_form">
     <%= render 'shared/friend_form', user: user %>
   </section>
@@ -20,10 +21,13 @@
 
 <section class="friend_map">
 
+<!-- el usuario logueado tiene algun amigo ?-->
   <% if user.friends.any? %>
     <div class="user_avatars">
       <h4><%= user.first_name %>'s Friends</h4>
+      <!-- muestra los amigos de el usuario logueado-->
       <% user.friends.each do |friend| %>
+              <!-- va a el perfil del usuario elegido UsersController#show -->
             <%= link_to avatar(friend, size: 40, style: :small), friend %>
       <% end %>
     </div>

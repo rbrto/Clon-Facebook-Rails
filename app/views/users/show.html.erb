@@ -1,18 +1,28 @@
 <% provide(:title, @user.name) %>
-
+<!--  vista del usuario amigo del usuario logueado  -->
 <div class="row">
+
   <aside class="col-md-4">
     <%= render 'shared/user_info', user: @user %>
   </aside>
+
   <div class="col-md-8">
+
+   <!-- el usuario amigo tiene algun post ?-->
     <% if @user.posts.any? %>
+
       <h3><%= @user.first_name %>'s Posts (<%= @user.posts.count %>)</h3>
       <ol class="posts">
         <%= render @posts %>
       </ol>
       <%= will_paginate @posts %>
+
     <% else %>
+    <!-- el usuario amigo no tene posts ?-->
+
       <h3><%= @user.first_name %> hasn't posted yet</h3>
+
     <% end %>
   </div>
+
 </div>
